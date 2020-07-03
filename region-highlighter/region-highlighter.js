@@ -5,6 +5,7 @@
 // @description  Highlights regions
 // @downloadURL  https://github.com/Sitethief/sitethiefs-ns-scripts/raw/master/region-highlighter/region-highlighter.js
 // @author       Sitethief of Vylixan
+// @copyright    GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
 // @match        https://www.nationstates.net/*
 // @grant        none
 // ==/UserScript==
