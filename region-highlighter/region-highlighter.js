@@ -1,8 +1,9 @@
 // ==UserScript==
 // @name         Region Highlighter
 // @namespace    sitethiefs-ns-scripts
-// @version      0.1
+// @version      0.1.1
 // @description  Highlights regions
+// @downloadURL  https://github.com/Sitethief/sitethiefs-ns-scripts/raw/master/region-highlighter/region-highlighter.js
 // @author       Sitethief of Vylixan
 // @match        https://www.nationstates.net/*
 // @grant        none
