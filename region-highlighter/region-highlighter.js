@@ -13,6 +13,12 @@
 (function() {
   'use strict';
   
+  let options = {
+    // removes junking button
+    junkingRemoved: true,
+  }
+  
+  
   let regionlist = [
     'the_pacific',
     'lazarus',
@@ -32,6 +38,12 @@
     .forEach(function (el) {
       if (regionlist.includes(el.getAttribute('href').replace('region=', ''))) {
         el.parentElement.parentElement.style.backgroundColor = 'red';
+      }
+      if (options.junkingRemoved) {
+        let buttons = el.querySelectorAll('div.deckcard > figure.front > div.deckcard-flag > div.deckcard-info > div.deckcard-info-cardbuttons a.deckcard-junk-button');
+        if (buttons[0]) {
+          buttons[0].remove();
+        }
       }
     });
 })();
