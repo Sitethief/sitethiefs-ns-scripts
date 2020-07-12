@@ -5,6 +5,7 @@
 // @description  Highlights regions
 // @downloadURL  https://github.com/Sitethief/sitethiefs-ns-scripts/raw/master/region-highlighter/region-highlighter.js
 // @author       Sitethief of Vylixan
+// @copyright    GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
 // @match        https://www.nationstates.net/*
 // @grant        none
 // ==/UserScript==
@@ -52,6 +53,12 @@
           if (buttons[0]) {
             buttons[0].remove();
           }
+        }
+      }
+      if (options.junkingRemoved) {
+        let buttons = el.querySelectorAll('div.deckcard > figure.front > div.deckcard-flag > div.deckcard-info > div.deckcard-info-cardbuttons a.deckcard-junk-button');
+        if (buttons[0]) {
+          buttons[0].remove();
         }
       }
     });
