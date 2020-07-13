@@ -51,11 +51,11 @@
                         buttons[0].remove();
                     }
                 }
-            }
-            if (options.junkingRemoved) {
-                let buttons = container.querySelectorAll('div.deckcard > figure.front > div.deckcard-flag > div.deckcard-info > div.deckcard-info-cardbuttons a.deckcard-junk-button');
-                if (buttons[0]) {
-                    buttons[0].remove();
+                if (options.junkingRemoved) {
+                    let buttons = container.querySelectorAll('div.deckcard > figure.front > div.deckcard-flag > div.deckcard-info > div.deckcard-info-cardbuttons a.deckcard-junk-button');
+                    if (buttons[0]) {
+                        buttons[0].remove();
+                    }
                 }
             }
         });
