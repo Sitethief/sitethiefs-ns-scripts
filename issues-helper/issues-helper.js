@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SitethiefsTargetedIssuesHelper
 // @namespace    sitethiefs-ns-scripts
-// @version      0.1
+// @version      0.1.0.1
 // @description  Helps out with stats targeted issues answering in Nationstates
 // @author       Sitethief of Vylixan
 // @match        *www.nationstates.net/*page=dilemmas
