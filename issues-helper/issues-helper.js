@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SitethiefsTargetedIssuesHelper
 // @namespace    sitethiefs-ns-scripts
-// @version      0.1.0.1
+// @version      0.1.0.2
 // @description  Helps out with stats targeted issues answering in Nationstates
 // @author       Sitethief of Vylixan
 // @match        *www.nationstates.net/*page=dilemmas
@@ -90,9 +90,10 @@
             issueLink.innerHTML = '<div style="align:center"><a href=" ' + link +' " style="text-decoration:underline;color: red;"> Issue Result Stats </a></div>';
             dilemma.insertBefore(issueLink, dilemma.firstChild);
         }
-    } else if (statsPage && urlParams.get('nation')) {
+    } else if (statsPage) {
+        const urlParams = new URLSearchParams(queryString);
         const nationKey = urlParams.get('nation')
-        if (filterConfigs[nationKey]) {
+        if (nationKey && filterConfigs[nationKey]) {
             const nationConfig = filterConfigs[nationKey];
             if (statsPage) {
                 document.querySelectorAll('table tbody tr td:nth-child(2) div').forEach(function (div) {
