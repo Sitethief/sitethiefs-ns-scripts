@@ -9,7 +9,7 @@
 // @match        http://www.mwq.dds.nl/ns/results/*
 // @match        https://www.nationstates.net/*page=enact_dilemma/*
 // @match        https://www.nationstates.net/page=enact_dilemma/*
-// @updateURL    https://github.com/jmikk/gotIssues/raw/master/NsDilemmaAutoClose.user.js
+// @updateURL    https://raw.githubusercontent.com/Sitethief/sitethiefs-ns-scripts/develop-stih/issues-helper/issues-helper.js
 // @grant        none
 // ==/UserScript==
 
@@ -67,10 +67,9 @@
     const statsPage = window.location.href.includes('dds');
     const enactDilemma = window.location.href.includes('page=enact_dilemma');
     
-    let body = document.getElementById("loggedin");
-    let currentNationKey = body.dataset.nname;
-    
     if (locationIsDilemmas && !locationIsShowDilemma) {
+        let body = document.getElementById("loggedin");
+        let currentNationKey = body.dataset.nname;
         const issues = document.querySelectorAll('ul.dilemmalist > li');
         if (issues.length) {
             issues.forEach(function (issueLi) {
@@ -81,6 +80,8 @@
             });
         }
     } else if (!locationIsDilemmas && locationIsShowDilemma) {
+        let body = document.getElementById("loggedin");
+        let currentNationKey = body.dataset.nname;
         const dilemma = document.getElementById("dilemma");
         let issueID = getIssueID(window.location.href);
         if (dilemma) {
