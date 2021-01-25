@@ -91,7 +91,7 @@
             dilemma.insertBefore(issueLink, dilemma.firstChild);
         }
     } else if (statsPage) {
-        const urlParams = new URLSearchParams(queryString);
+        const urlParams = new URLSearchParams(window.location.search);
         const nationKey = urlParams.get('nation')
         if (nationKey && filterConfigs[nationKey]) {
             const nationConfig = filterConfigs[nationKey];
