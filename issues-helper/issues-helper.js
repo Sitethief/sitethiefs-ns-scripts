@@ -163,7 +163,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const nationKey = urlParams.get('nation');
         if (nationKey && filterConfigs[nationKey]) {
-            const nationConfig = filterConfigs[nationKey];
+            const nationConfig = filterConfigs[nationKey].stats;
             if (statsPage) {
                 let removeLines = [];
                 let findCounter = 0;
@@ -209,7 +209,7 @@
         let body = document.getElementById('loggedin');
         if (body) {
             let currentNationKey = body.dataset.nname;
-            const nationConfig = filterConfigs[currentNationKey];
+            const nationConfig = filterConfigs[currentNationKey].results;
             if (filterConfigs[currentNationKey]) {
                 window.scrollTo(0, document.body.scrollHeight);
                 const buttons = document.getElementById('toggleissuedetail');
