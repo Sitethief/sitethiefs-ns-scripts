@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SitethiefsTargetedIssuesHelper
 // @namespace    sitethiefs-ns-scripts
-// @version      0.2
+// @version      0.2.1
 // @description  Helps out with stats targeted issues answering in Nationstates
 // @author       Sitethief of Vylixan
 // @match        *www.nationstates.net/*page=dilemmas
@@ -225,7 +225,11 @@
                         }
                     }
                     if (found === true) {
-                        effect.style.border = '5px solid red';
+                        let colour = 'red';
+                        if (span.className.includes('wcg')) {
+                            colour = 'green';
+                        }
+                        effect.style.border = '5px solid ' + colour;
                         effect.style.padding = '3px';
                     }
                 });
