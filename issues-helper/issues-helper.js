@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         SitethiefsTargetedIssuesHelper
 // @namespace    sitethiefs-ns-scripts
-// @version      0.1.0.2
+// @version      0.2
 // @description  Helps out with stats targeted issues answering in Nationstates
 // @author       Sitethief of Vylixan
 // @match        *www.nationstates.net/*page=dilemmas
 // @match        *www.nationstates.net/*page=show_dilemma*dilemma=*
-// @match        http://www.mwq.dds.nl/ns/results/*
-// @match        https://www.nationstates.net/*page=enact_dilemma/*
-// @match        https://www.nationstates.net/page=enact_dilemma/*
+// @match        *www.mwq.dds.nl/ns/results/*
+// @match        *www.nationstates.net/*page=enact_dilemma/*
+// @match        *www.nationstates.net/page=enact_dilemma/*
 // @updateURL    https://raw.githubusercontent.com/Sitethief/sitethiefs-ns-scripts/develop-stih/issues-helper/issues-helper.js
 // @grant        none
 // ==/UserScript==
@@ -21,45 +21,114 @@
 (function () {
     'use strict';
     
+    // Stats is the filtering on the stats page
+    // Results is the highlighting on the result page
     let filterConfigs = {
-        vylixan_gaea: [
-            'Eco-Friendliness',
-            'Weather',
-            'Environmental Beauty',
-        ],
-        vylixan_aphrodite: [
-            'Average Income (',
-        ],
-        vylixan_dora: [
-            'Average Income of Poor',
-        ],
-        vylixan_ares: [
-            'Industry: Arms Manufacturing',
-        ],
-        vylixan_apollo: [
-            'Average Disposable Income',
-        ],
-        vylixan_artemis: [
-            'Eco-Friendliness',
-        ],
-        vylixan_demeter: [
-            'Sector: Agriculture',
-        ],
-        vylixan_dionysus: [
-            'Authoritarianism',
-        ],
-        vylixan_hades: [
-            'Economy (',
-            'Income Equality',
-            'Wealth Gaps',
-            'Economic Freedom',
-            'Corruption',
-            'Employment',
-        ],
-        vylixan_athena: [
-            'Public Education',
-            'Intelligence',
-        ]
+        vylixan_gaea: {
+            stats: [
+                'Eco-Friendliness',
+                'Weather',
+                'Environmental Beauty',
+            ],
+            results: [
+                'Eco-Friendliness',
+                'Weather',
+                'Environmental Beauty',
+            ],
+        },
+        vylixan_aphrodite: {
+            stats: [
+                'Average Income (',
+            ],
+            results: [
+                'Wealth Gaps',
+                'Average Income of Rich',
+                'Average Income of Poor',
+                'Crime',
+                'Industry: Beverage Sales',
+                'Weaponization',
+                'Obesity',
+                'Death Rate',
+                'Average Disposable Income',
+                'Average Income',
+            ],
+        },
+        vylixan_dora: {
+            stats: [
+                'Average Income of Poor',
+            ],
+            results: [
+                'Average Income of Poor',
+            ]
+        },
+        vylixan_ares: {
+            stats: [
+                'Industry: Arms Manufacturing',
+            ],
+            results: [
+                'Industry: Arms Manufacturing',
+            ]
+        },
+        vylixan_apollo: {
+            stats: [
+                'Average Disposable Income',
+            ],
+            results: [
+                'Average Disposable Income',
+            ]
+        },
+        vylixan_artemis: {
+            stats: [
+                'Eco-Friendliness',
+            ],
+            results: [
+                'Eco-Friendliness',
+            ]
+        },
+        vylixan_demeter: {
+            stats: [
+                'Sector: Agriculture',
+            ],
+            results: [
+                'Sector: Agriculture',
+            ]
+        },
+        vylixan_dionysus: {
+            stats: [
+                'Authoritarianism',
+            ],
+            results: [
+                'Authoritarianism',
+            ]
+        },
+        vylixan_hades: {
+            stats: [
+                'Economy (',
+                'Income Equality',
+                'Wealth Gaps',
+                'Economic Freedom',
+                'Corruption',
+                'Employment',
+            ],
+            results: [
+                'Economy (',
+                'Income Equality',
+                'Wealth Gaps',
+                'Economic Freedom',
+                'Corruption',
+                'Employment',
+            ]
+        },
+        vylixan_athena: {
+            stats: [
+                'Public Education',
+                'Intelligence',
+            ],
+            results: [
+                'Public Education',
+                'Intelligence',
+            ]
+        }
     };
     
     const locationIsDilemmas = window.location.href.includes('page=dilemmas');
@@ -96,7 +165,10 @@
         if (nationKey && filterConfigs[nationKey]) {
             const nationConfig = filterConfigs[nationKey];
             if (statsPage) {
+                let removeLines = [];
+                let findCounter = 0;
                 document.querySelectorAll('table tbody tr td:nth-child(2) div').forEach(function (div) {
+                    
                     let found = false;
                     let color = 'black';
                     for (let key in nationConfig) {
@@ -104,12 +176,12 @@
                             found = true;
                             if (found) {
                                 let mean = div.innerText.substring(
-                                    div.innerText.lastIndexOf("(") + 1,
-                                    div.innerText.lastIndexOf(")")
+                                    div.innerText.lastIndexOf('(') + 1,
+                                    div.innerText.lastIndexOf(')')
                                 );
-                                if (mean.indexOf('-') !== -1) {
+                                if ((mean && mean.indexOf('-') !== -1) || (!mean && div.innerText.indexOf('-') !== -1)) {
                                     color = 'red';
-                                } else if (mean.indexOf('+') !== -1) {
+                                } else if ((mean && mean.indexOf('+') !== -1) || (!mean && div.innerText.indexOf('+') !== -1)) {
                                     color = 'green';
                                 }
                             }
@@ -117,13 +189,19 @@
                     }
                     if (found === false) {
                         div.style.display = 'none';
-                        
+                        removeLines[findCounter] = true;
                     } else {
                         div.style.color = color;
+                        removeLines[findCounter] = false;
                     }
+                    findCounter++;
                 });
-                document.querySelectorAll('table tbody tr td:nth-child(3)').forEach(function (td) {
-                    td.style.display = 'none';
+                let removeCounter = 0;
+                document.querySelectorAll('table tbody tr td:nth-child(3) div').forEach(function (td) {
+                    if (removeLines[removeCounter] === true) {
+                        td.style.display = 'none';
+                    }
+                    removeCounter++;
                 });
             }
         }
